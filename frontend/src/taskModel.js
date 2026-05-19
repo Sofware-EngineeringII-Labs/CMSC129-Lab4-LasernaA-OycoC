@@ -1,5 +1,9 @@
+function getTitle(input) {
+  return (input && input.title) || "";
+}
+
 function validateTaskInput(input) {
-  const title = (input && input.title) || "";
+  const title = getTitle(input);
   if (title.trim().length === 0) {
     throw new Error("Title is required");
   }
@@ -7,7 +11,7 @@ function validateTaskInput(input) {
 
 function normalizeTaskInput(input) {
   return {
-    title: input.title.trim()
+    title: getTitle(input).trim()
   };
 }
 
