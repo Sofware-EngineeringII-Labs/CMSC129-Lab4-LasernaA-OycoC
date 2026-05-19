@@ -36,9 +36,10 @@ jobs:
   deploy:
     needs: test
     runs-on: ubuntu-latest
-    if: ${{ success() && secrets.RENDER_DEPLOY_HOOK != '' }}
+    if: ${{ success() }}
+    env:
+      RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
     steps:
       - name: Trigger Render deploy hook
         run: curl -sS -X POST "$RENDER_DEPLOY_HOOK"
-        env:
-          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        if: ${{ env.RENDER_DEPLOY_HOOK != '' }}
