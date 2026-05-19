@@ -1,0 +1,24 @@
+# Node
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build outputs
+/dist/
+/frontend/dist/
+
+# Playwright
+/test-results/
+/playwright-report/
+
+# Environment
+.env
+.env.*
