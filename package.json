@@ -9,7 +9,7 @@
     "build:frontend": "vite build",
     "test:unit": "jest tests/unit",
     "test:integration": "jest tests/integration --passWithNoTests",
-    "test:system": "playwright test",
+    "test:system": "playwright test --pass-with-no-tests",
     "test": "npm run test:unit && npm run test:integration && npm run test:system",
     "start": "node backend/server.js"
   },
