@@ -27,20 +27,29 @@ A simple task manager web app that lets users create, edit, and delete tasks. Th
 - Start dev servers and run tests using the scripts documented below.
 
 ## Test Results
-- Unit tests: (screenshot to be added)
-- Integration tests: (screenshot to be added)
-- System tests: (screenshot to be added)
-- Full suite: (screenshot to be added)
+- Unit tests:
+![Unit tests](tests/assets/unit.png)
+- Integration tests:
+![Integration tests](tests/assets/integration.png)
+- System tests:
+![System tests](tests/assets/system.png)
+- Full suite:
+
+![Full suite part 1](tests/assets/full_1.png)
+![Full suite part 2](tests/assets/full_2.png)
 
 ## CI/CD Setup
 - Tool: GitHub Actions
 - Trigger: Push to main
 - Behavior: Run unit, integration, and system tests on every push
-- Evidence: Screenshots of failing [RED] and passing [GREEN] pipeline runs will be added here
+- Evidence: Screenshots of failing [RED] pipeline runs pending
 
 ## Deployment
 - Target: Render (single service: Express serves the built React frontend)
 - Docker: Multi-stage build to produce a production-ready image
 
 ## Reflection
-(To be completed in the final documentation commit)
+- TDD helped keep the API, UI, and tests aligned through each phase.
+- System tests surfaced UI gaps early and clarified required user flows.
+- Incremental commits made it easier to recover when tests failed.
+- Keeping the backend in-memory simplified debugging and iteration speed.
