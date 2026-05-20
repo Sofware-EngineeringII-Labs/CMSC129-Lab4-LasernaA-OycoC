@@ -1,4 +1,11 @@
 const express = require("express");
+// Wired backend POST handler to use task model validation and normalization
+// so API and unit logic stay aligned
+// Add 400 response when title is missing/blank and trim
+const {
+	validateTaskInput,
+	normalizeTaskInput
+} = require("../frontend/src/taskModel");
 
 const app = express();
 
@@ -12,15 +19,20 @@ app.get("/tasks", (req, res) => {
 });
 
 app.post("/tasks", (req, res) => {
-	const { title, description } = req.body || {};
-	const task = {
-		id: String(nextId++),
-		title,
-		description
-	};
+	try {
+		validateTaskInput(req.body);
+		const normalized = normalizeTaskInput(req.body);
+		const task = {
+			id: String(nextId++),
+			title: normalized.title,
+			description: req.body && req.body.description
+		};
 
-	tasks.push(task);
-	res.status(201).json(task);
+		tasks.push(task);
+		res.status(201).json(task);
+	} catch (error) {
+		res.status(400).json({ error: error.message });
+	}
 });
 
 module.exports = app;
