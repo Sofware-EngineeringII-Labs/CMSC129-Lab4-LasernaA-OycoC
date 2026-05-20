@@ -6,6 +6,45 @@ function buildTitleAttribute(title) {
   return String(title || "");
 }
 
+function EditTaskForm({
+  editTitle,
+  editDescription,
+  onChangeTitle,
+  onChangeDescription,
+  onSave,
+  onCancel
+}) {
+  return (
+    <section>
+      <h2>Edit Task</h2>
+      <label>
+        Title
+        <input
+          data-testid="edit-title"
+          type="text"
+          value={editTitle}
+          onChange={onChangeTitle}
+        />
+      </label>
+      <label>
+        Description
+        <input
+          data-testid="edit-description"
+          type="text"
+          value={editDescription}
+          onChange={onChangeDescription}
+        />
+      </label>
+      <button data-testid="save-task" type="button" onClick={onSave}>
+        Save
+      </button>
+      <button type="button" onClick={onCancel}>
+        Cancel
+      </button>
+    </section>
+  );
+}
+
 export default function App() {
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState("");
@@ -144,33 +183,16 @@ export default function App() {
       </section>
 
       {editingId !== null ? (
-        <section>
-          <h2>Edit Task</h2>
-          <label>
-            Title
-            <input
-              data-testid="edit-title"
-              type="text"
-              value={editTitle}
-              onChange={(event) => setEditTitle(event.target.value)}
-            />
-          </label>
-          <label>
-            Description
-            <input
-              data-testid="edit-description"
-              type="text"
-              value={editDescription}
-              onChange={(event) => setEditDescription(event.target.value)}
-            />
-          </label>
-          <button data-testid="save-task" type="button" onClick={saveEdit}>
-            Save
-          </button>
-          <button type="button" onClick={cancelEdit}>
-            Cancel
-          </button>
-        </section>
+        <EditTaskForm
+          editTitle={editTitle}
+          editDescription={editDescription}
+          onChangeTitle={(event) => setEditTitle(event.target.value)}
+          onChangeDescription={(event) =>
+            setEditDescription(event.target.value)
+          }
+          onSave={saveEdit}
+          onCancel={cancelEdit}
+        />
       ) : null}
     </main>
   );

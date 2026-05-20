@@ -22,48 +22,53 @@ async function createTask(page, { title, description }) {
 }
 
 test.describe("Task manager system tests", () => {
-  test("create task adds it to the list", async ({ page }) => {
+  test("create task adds it to the list", async ({ page }, testInfo) => {
     await page.goto("/");
 
+    const uniqueTitle = `${testInfo.title}-${Date.now()}`;
+
     await createTask(page, {
-      title: "Write system tests",
+      title: uniqueTitle,
       description: "Phase 4 RED"
     });
 
     await expect(page.locator(selectors.taskList)).toBeVisible();
-    await expect(
-      page.locator(selectors.taskItem("Write system tests"))
-    ).toBeVisible();
+    await expect(page.locator(selectors.taskItem(uniqueTitle))).toBeVisible();
   });
 
-  test("edit task updates title and description", async ({ page }) => {
+  test("edit task updates title and description", async ({ page }, testInfo) => {
     await page.goto("/");
 
+    const uniqueTitle = `${testInfo.title}-${Date.now()}`;
+
     await createTask(page, {
-      title: "Old title",
+      title: uniqueTitle,
       description: "Old description"
     });
 
-    await page.click(selectors.editButton("Old title"));
-    await page.fill(selectors.editTitleInput, "Updated title");
+    await page.click(selectors.editButton(uniqueTitle));
+    const updatedTitle = `${uniqueTitle}-updated`;
+    await page.fill(selectors.editTitleInput, updatedTitle);
     await page.fill(selectors.editDescriptionInput, "Updated description");
     await page.click(selectors.saveButton);
 
-    await expect(page.locator(selectors.taskItem("Updated title"))).toBeVisible();
+    await expect(page.locator(selectors.taskItem(updatedTitle))).toBeVisible();
   });
 
-  test("delete task removes it from the list", async ({ page }) => {
+  test("delete task removes it from the list", async ({ page }, testInfo) => {
     await page.goto("/");
 
+    const uniqueTitle = `${testInfo.title}-${Date.now()}`;
+
     await createTask(page, {
-      title: "Disposable task",
+      title: uniqueTitle,
       description: "To be removed"
     });
 
-    await page.click(selectors.deleteButton("Disposable task"));
+    await page.click(selectors.deleteButton(uniqueTitle));
 
     await expect(
-      page.locator(selectors.taskItem("Disposable task"))
+      page.locator(selectors.taskItem(uniqueTitle))
     ).toHaveCount(0);
   });
 });
