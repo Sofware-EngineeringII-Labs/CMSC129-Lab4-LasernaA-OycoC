@@ -14,6 +14,10 @@ app.use(express.json());
 let nextId = 1;
 const tasks = [];
 
+app.get("/", (req, res) => {
+	res.status(200).json(tasks);
+});
+
 app.get("/tasks", (req, res) => {
 	res.status(200).json(tasks);
 });
